@@ -1,0 +1,36 @@
+trigger:
+  branches:
+    include:
+      - main  # Replace 'main' with your default branch name
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: 'latest'
+
+- task: TerraformTaskV4@4
+  inputs:
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    environmentServiceNameAzureRM: 'nour-serviceconnection'
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'nour-serviceconnection'
+    backendAzureRmResourceGroupName: 'terraform'
+    backendAzureRmStorageAccountName: 'terraformstock'
+    backendAzureRmContainerName: 'terrafrom-container'
+    backendAzureRmKey: 'tf/terraform.tfstate'
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'nour-serviceconnection'
