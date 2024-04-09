@@ -1,3 +1,12 @@
+terraform {
+  backend "azurerm" {
+    backend_service_arm            = "Azure Resource Manager"  // Azure ARM (Azure Resource Manager)
+    backend_azure_rm_resource_group = "terraform" // Azure Resource Group where the storage account is located
+    backend_azure_rm_storage_account_name = "terraformstock" // Azure Storage Account Name
+    backend_azure_rm_container_name       = "terraform-container" // Azure Storage Container Name
+    backend_azure_rm_key                  = "tf/terraform.tfstate" // Path to the state file within the container
+  }
+}
 resource "azurerm_virtual_machine" "linux_vm" {
   name = "my-simple-vm"
   location = "West Europe"
