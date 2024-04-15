@@ -1,7 +1,7 @@
 trigger:
   branches:
     include:
-      - main  # Replace 'main' with your default branch name
+      - main
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -17,11 +17,6 @@ steps:
 
 - task: TerraformTaskV4@4
   inputs:
-- task: TerraformTaskV4@4
-  inputs:
-    provider: 'azurerm'
-    command: 'apply'
-    environmentServiceNameAzureRM: 'nour-serviceconnection'
     provider: 'azurerm'
     command: 'init'
     backendServiceArm: 'nour-serviceconnection'
@@ -29,14 +24,16 @@ steps:
     backendAzureRmStorageAccountName: 'terraformstock'
     backendAzureRmContainerName: 'terrafrom-container'
     backendAzureRmKey: 'tf/terraform.tfstate'
+
 - task: TerraformTaskV4@4
   inputs:
     provider: 'azurerm'
     command: 'plan'
     environmentServiceNameAzureRM: 'nour-serviceconnection'
+
 - task: TerraformTaskV4@4
   inputs:
     provider: 'azurerm'
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     environmentServiceNameAzureRM: 'nour-serviceconnection'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
